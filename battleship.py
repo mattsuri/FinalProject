@@ -16,9 +16,23 @@ white = Color(0xFFFFFF, 1)
 
 
 RADIUS = 50 #radius of circles
-GAP = 50 #gap distance between circle centers
-BORDEREDGE = 50 #border distance
-DIAMETER = 200
+GAP = 100 #gap distance between circle centers
+BORDEREDGE = 0 #border distance
+DIAMETER = RADIUS * 2
+BOARDSIZE = 5
+
+
+def mouseClick(event):
+    row = int((event.x - BORDEREDGE)/GAP)
+    col = int((event.y - BORDEREDGE)/GAP)
+    print(col)
+    print(row)
+
+
+def boardMartix():
+    return [[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE]
+
+
 
 
 
@@ -33,12 +47,13 @@ if __name__ == "__main__":
     redCircle = CircleAsset(RADIUS, blackOutline, red)
     
     whiteCircle = CircleAsset(RADIUS, blackOutline, white) #radius, outline, fill
-    for i in range (0,10):
+    for i in range (0,BOARDSIZE):
         height = BORDEREDGE + i*GAP
-        for i in range (0,10):
+        for i in range (0,BOARDSIZE):
             Sprite(whiteCircle, (BORDEREDGE + i*GAP, height ))
             
             
     
- 
+    App().listenMouseEvent("click", mouseClick)
+
     App().run() 
