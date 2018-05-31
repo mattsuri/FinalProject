@@ -15,11 +15,26 @@ black = Color(0x000000, 1)
 white = Color(0xFFFFFF, 1) 
 
 
+
 RADIUS = 50 #radius of circles
 GAP = 100 #gap distance between circle centers
 BORDEREDGE = 0 #border distance
 DIAMETER = RADIUS * 2
 BOARDSIZE = 5
+
+BLANK = 0 
+SHIP = 1
+MISS = 2 
+HIT = 3
+
+
+blackOutline = LineStyle(1, black)
+    
+redCircle = CircleAsset(RADIUS, blackOutline, red)
+    
+whiteCircle = CircleAsset(RADIUS, blackOutline, white) #radius, outline, fill
+
+
 
 
 def mouseClick(event):
@@ -29,7 +44,7 @@ def mouseClick(event):
     print(row)
 
 
-def boardMartix():
+def buildBoard():
     return [[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE]
 
 
@@ -41,12 +56,11 @@ if __name__ == "__main__":
     data = {}
    
     
+    data["playerBoard"] = buildBoard()
+    data["compBoard"] = buildBoard()
     
-    blackOutline = LineStyle(1, black)
     
-    redCircle = CircleAsset(RADIUS, blackOutline, red)
-    
-    whiteCircle = CircleAsset(RADIUS, blackOutline, white) #radius, outline, fill
+   
     for i in range (0,BOARDSIZE):
         height = BORDEREDGE + i*GAP
         for i in range (0,BOARDSIZE):
