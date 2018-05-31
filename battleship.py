@@ -48,7 +48,12 @@ def buildBoard():
     return [[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE]
 
 
-
+def redraw():
+    for i in range (0,BOARDSIZE):
+        height = BORDEREDGE + i*GAP
+        for i in range (0,BOARDSIZE):
+            Sprite(whiteCircle, (BORDEREDGE + i*GAP, height ))
+    
 
 
 if __name__ == "__main__":
