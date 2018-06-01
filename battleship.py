@@ -13,6 +13,8 @@ green = Color(0x00FF00, 1)
 blue = Color(0x0000FF, 1)
 black = Color(0x000000, 1) 
 white = Color(0xFFFFFF, 1) 
+grey = Color(0x787878, 1) 
+
 
 
 
@@ -32,9 +34,9 @@ blackOutline = LineStyle(1, black)
     
 redCircle = CircleAsset(RADIUS, blackOutline, red)
     
-whiteCircle = CircleAsset(RADIUS, blackOutline, white) #radius, outline, fill
-
-
+blankCircle = CircleAsset(RADIUS, blackOutline, white) #radius, outline, fill
+hitCircle = CircleAsset(RADIUS, blackOutline, red) #radius, outline, fill
+missCircle = CircleAsset(RADIUS, blackOutline, grey) #radius, outline, fill
 
 
 def mouseClick(event):
@@ -49,10 +51,18 @@ def buildBoard():
 
 
 def redraw():
-    for i in range (0,BOARDSIZE):
-        height = BORDEREDGE + i*GAP
-        for i in range (0,BOARDSIZE):
-            Sprite(whiteCircle, (BORDEREDGE + i*GAP, height ))
+    
+    for item in App().spritelist[:]: #Destroying sprites
+        item.destroy()
+    for row in range (0,BOARDSIZE):
+        for row in range(0,SIZE): #the loop for board
+            for column in range(0,BOARDSIZE):
+                if data["playerBoard"][row][column] == EMPTY:
+                Sprite(blankCircle, (RADIUS+column*DIAMETER, RADIUS+2*row*RADIUS))
+            elif data["playerBoard"][row][column] == MISS:
+                Sprite(missCircle, (RADIUS+column*DIAMETER, RADIUS+2*row*RADIUS))
+            elif data["playerBoard"][row][column] == HIT:
+                Sprite(hitCircle, (RADIUS+column*DIAMETER, RADIUS+2*row*RADIUS))
     
 
 
@@ -60,17 +70,12 @@ if __name__ == "__main__":
     
     data = {}
    
-    
+    data["pickShips"] = True
     data["playerBoard"] = buildBoard()
     data["compBoard"] = buildBoard()
     
     
-   
-    for i in range (0,BOARDSIZE):
-        height = BORDEREDGE + i*GAP
-        for i in range (0,BOARDSIZE):
-            Sprite(whiteCircle, (BORDEREDGE + i*GAP, height ))
-            
+   redraw()
             
     
     App().listenMouseEvent("click", mouseClick)
