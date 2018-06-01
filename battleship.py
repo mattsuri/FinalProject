@@ -45,6 +45,9 @@ def mouseClick(event):
     print(col)
     print(row)
 
+    if data["pickShips"] == True:
+        data["playerBoard"][row][col] == HIT
+     
 
 def buildBoard():
     return [[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE]
@@ -54,28 +57,27 @@ def redraw():
     
     for item in App().spritelist[:]: #Destroying sprites
         item.destroy()
-    for row in range (0,BOARDSIZE):
-        for row in range(0,SIZE): #the loop for board
-            for column in range(0,BOARDSIZE):
-                if data["playerBoard"][row][column] == EMPTY:
-                Sprite(blankCircle, (RADIUS+column*DIAMETER, RADIUS+2*row*RADIUS))
+    for row in range(0,BOARDSIZE): #the loop for board
+        for column in range(0,BOARDSIZE):
+            if data["playerBoard"][row][column] == BLANK:
+                Sprite(blankCircle, (RADIUS+column*DIAMETER, RADIUS+row*DIAMETER))
             elif data["playerBoard"][row][column] == MISS:
-                Sprite(missCircle, (RADIUS+column*DIAMETER, RADIUS+2*row*RADIUS))
+                Sprite(missCircle, (RADIUS+column*DIAMETER, RADIUS+row*DIAMETER))
             elif data["playerBoard"][row][column] == HIT:
-                Sprite(hitCircle, (RADIUS+column*DIAMETER, RADIUS+2*row*RADIUS))
+                Sprite(hitCircle, (RADIUS+column*DIAMETER, RADIUS+row*DIAMETER))
     
 
 
 if __name__ == "__main__":
     
     data = {}
-   
+    data["numShips"] = 0 
     data["pickShips"] = True
     data["playerBoard"] = buildBoard()
     data["compBoard"] = buildBoard()
     
     
-   redraw()
+    redraw()
             
     
     App().listenMouseEvent("click", mouseClick)
