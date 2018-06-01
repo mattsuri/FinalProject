@@ -19,7 +19,6 @@ grey = Color(0x787878, 1)
 
 
 RADIUS = 50 #radius of circles
-GAP = 100 #gap distance between circle centers
 BORDEREDGE = 0 #border distance
 DIAMETER = RADIUS * 2
 BOARDSIZE = 5
@@ -37,17 +36,25 @@ redCircle = CircleAsset(RADIUS, blackOutline, red)
 blankCircle = CircleAsset(RADIUS, blackOutline, white) #radius, outline, fill
 hitCircle = CircleAsset(RADIUS, blackOutline, red) #radius, outline, fill
 missCircle = CircleAsset(RADIUS, blackOutline, grey) #radius, outline, fill
+shipCircle = CircleAsset(RADIUS, blackOutline, green) #radius, outline, fill
 
-
+  
 def mouseClick(event):
-    row = int((event.x - BORDEREDGE)/GAP)
-    col = int((event.y - BORDEREDGE)/GAP)
+    col = int((event.x - BORDEREDGE)/DIAMETER)
+    row = int((event.y - BORDEREDGE)/DIAMETER)
     print(col)
     print(row)
+    
 
     if data["pickShips"] == True:
-        data["playerBoard"][row][col] == HIT
-     
+        if data["playerBoard"][row][col] != SHIP:
+                data["playerBoard"][row][col] = SHIP #adding a ship to the player board
+                Sprite(shipCircle, (col*DIAMETER, row*DIAMETER))
+                data["numShips"] += 1
+        
+    print(data["playerBoard"])
+    
+    redraw()
 
 def buildBoard():
     return [[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE]
@@ -60,11 +67,13 @@ def redraw():
     for row in range(0,BOARDSIZE): #the loop for board
         for column in range(0,BOARDSIZE):
             if data["playerBoard"][row][column] == BLANK:
-                Sprite(blankCircle, (RADIUS+column*DIAMETER, RADIUS+row*DIAMETER))
+                Sprite(blankCircle, (column*DIAMETER, row*DIAMETER))
+            elif data["playerBoard"][row][column] == SHIP:
+                Sprite(shipCircle, (column*DIAMETER, row*DIAMETER))
             elif data["playerBoard"][row][column] == MISS:
-                Sprite(missCircle, (RADIUS+column*DIAMETER, RADIUS+row*DIAMETER))
+                Sprite(missCircle, (column*DIAMETER, row*DIAMETER))
             elif data["playerBoard"][row][column] == HIT:
-                Sprite(hitCircle, (RADIUS+column*DIAMETER, RADIUS+row*DIAMETER))
+                Sprite(hitCircle, (column*DIAMETER, row*DIAMETER))
     
 
 
