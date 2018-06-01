@@ -45,12 +45,15 @@ def mouseClick(event):
     print(col)
     print(row)
     
-
-    if data["pickShips"] == True:
-        if data["playerBoard"][row][col] != SHIP:
-                data["playerBoard"][row][col] = SHIP #adding a ship to the player board
-                Sprite(shipCircle, (col*DIAMETER, row*DIAMETER))
-                data["numShips"] += 1
+    if data["numShips"] < 6:
+        if data["pickShips"] == True:
+            if data["playerBoard"][row][col] != SHIP:
+                    data["playerBoard"][row][col] = SHIP #adding a ship to the player board
+                    Sprite(shipCircle, (col*DIAMETER, row*DIAMETER))
+                    data["numShips"] += 1
+                    if data["numShips"] == 5:
+                         data["pickShips"] = False
+                        
         
     print(data["playerBoard"])
     
