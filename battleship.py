@@ -22,6 +22,7 @@ RADIUS = 50 #radius of circles
 BORDEREDGE = 0 #border distance
 DIAMETER = RADIUS * 2
 BOARDSIZE = 5
+BOARDGAP = (DIAMETER*5) + DIAMETER
 
 BLANK = 0 
 SHIP = 1
@@ -48,7 +49,7 @@ def mouseClick(event):
     if data["numShips"] < 6:
         if data["pickShips"] == True:
             if data["playerBoard"][row][col] != SHIP:
-                    data["playerBoard"][row][col] = SHIP #adding a ship to the player board
+                    data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
                     Sprite(shipCircle, (col*DIAMETER, row*DIAMETER))
                     data["numShips"] += 1
                     if data["numShips"] == 5:
@@ -77,7 +78,16 @@ def redraw():
                 Sprite(missCircle, (column*DIAMETER, row*DIAMETER))
             elif data["playerBoard"][row][column] == HIT:
                 Sprite(hitCircle, (column*DIAMETER, row*DIAMETER))
-    
+    for row in range(0,BOARDSIZE): #the loop for board
+        for column in range(0,BOARDSIZE):
+            if data["compBoard"][row][column] == BLANK:
+                Sprite(blankCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
+            elif data["compBoard"][row][column] == SHIP:
+                Sprite(shipCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
+            elif data["comprBoard"][row][column] == MISS:
+                Sprite(missCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
+            elif data["compBoard"][row][column] == HIT:
+                Sprite(hitCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
 
 
 if __name__ == "__main__":
