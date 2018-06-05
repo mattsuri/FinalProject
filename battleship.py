@@ -60,14 +60,14 @@ def mouseClick(event):
     print("compCol:", compCol)
     print("compRow:", compRow)
     
-    nowShips = 0
+
     if data["pickShips"] == True:
-        if nowShips < data["numShips"]:
+        if data["numShips"] < 6:
             if data["playerBoard"][row][col] != SHIP:
                     data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
                     Sprite(shipCircle, (col*DIAMETER, row*DIAMETER))
-                    nowShips += 1
-                    if nowShips == 5:
+                    data["numShips"] += 1
+                    if data["numShips"] == 5:
                          data["pickShips"] = False
                          data["compPickShips"] = True
                          
@@ -131,8 +131,8 @@ def redraw():
 if __name__ == "__main__":
     
     data = {}
-    data["numShips"] = 6
-    
+    data["numShips"] = 0
+    data["compShips"] = 6
     data["pickShips"] = True
     data["playerHits"] = 0
     data["playerBoard"] = buildBoard()
