@@ -43,15 +43,17 @@ shipCircle = CircleAsset(RADIUS, blackOutline, green) #radius, outline, fill
 def compPick():
     row = randint(0,4)
     col = randint(0,4)
-    i = 0 
-    while i < 1:
-        if data["playerBoard"][row][col] != HIT or data["playerBoard"][row][col] != MISS:
-            if data["playerBoard"][row][col] == SHIP:
-                data["playerBoard"][row][col] = HIT
-                i += 1
-            elif data["playerBoard"][row][col] == BLANK:
-                data["playerBoard"][row][col] = MISS
-                i += 1
+    
+    if data["playerBoard"][row][col] != HIT and data["playerBoard"][row][col] != MISS:
+        
+        if data["playerBoard"][row][col] == SHIP:
+            data["playerBoard"][row][col] = HIT
+            
+        elif data["playerBoard"][row][col] == BLANK:
+            data["playerBoard"][row][col] = MISS
+            
+    else:
+        compPick()
             
         
   
