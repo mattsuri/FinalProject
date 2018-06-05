@@ -69,6 +69,7 @@ def mouseClick(event):
             data["computerBoard"][compRow][compCol] = HIT
             data["playerHits"] += 1
             computer = True
+        compPick()
     
     print(data["playerBoard"])
     
@@ -76,13 +77,19 @@ def mouseClick(event):
 
 def compShipPick():
     while i < 6:
-        row = randint(1,5)
-        col = randint(1,5)
-        if data["playerBoard"][row][col] != SHIP:
-            data["playerBoard"][row][col] = SHIP
+        row = randint(0,4)
+        col = randint(0,4)
+        if data["compBoard"][row][col] != SHIP:
+            data["compBoard"][row][col] = SHIP
             i += 1
 
-def compPick:
+def compPick():
+    row = randint(0,4)
+    col = randint(0,4)
+    if data["playerBoard"][row][col] == SHIP:
+        data["playerBoard"][row][col] = HIT
+    elif data["playerBoard"][row][col] == EMPTY:
+        data["playerBoard"][row][col] = MISS
     
 
 
