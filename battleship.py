@@ -71,7 +71,7 @@ def mouseClick(event):
         if data["numShips"] < 6:
             if data["playerBoard"][row][col] != SHIP:
                     data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
-                    Sprite(shipCircle, (col*DIAMETER, row*DIAMETER))
+                    
                     data["numShips"] += 1
                     if data["numShips"] == 5:
                          data["pickShips"] = False
