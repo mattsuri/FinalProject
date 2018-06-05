@@ -49,7 +49,7 @@ def compPick():
             if data["playerBoard"][row][col] == SHIP:
                 data["playerBoard"][row][col] = HIT
                 i += 1
-            elif data["playerBoard"][row][col] == EMPTY:
+            elif data["playerBoard"][row][col] == BLANK:
                 data["playerBoard"][row][col] = MISS
                 i += 1
             
@@ -79,7 +79,7 @@ def mouseClick(event):
                          
    
     else:
-        if data["compBoard"][compRow][compCol] == EMPTY:
+        if data["compBoard"][compRow][compCol] == BLANK:
             data["compBoard"][compRow][compCol] = MISS
             
         elif data["compBoard"][compRow][compCol] == SHIP:
