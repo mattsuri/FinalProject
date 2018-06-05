@@ -39,6 +39,16 @@ hitCircle = CircleAsset(RADIUS, blackOutline, red) #radius, outline, fill
 missCircle = CircleAsset(RADIUS, blackOutline, grey) #radius, outline, fill
 shipCircle = CircleAsset(RADIUS, blackOutline, green) #radius, outline, fill
 
+
+def compPick():
+    row = randint(0,4)
+    col = randint(0,4)
+    if data["playerBoard"][row][col] == SHIP:
+        data["playerBoard"][row][col] = HIT
+    elif data["playerBoard"][row][col] == EMPTY:
+        data["playerBoard"][row][col] = MISS
+    
+  
   
 def mouseClick(event):
     col = int((event.x - BORDEREDGE)/DIAMETER)
@@ -75,6 +85,7 @@ def mouseClick(event):
     
     redraw()
 
+
 def compShipPick():
     while i < 6:
         row = randint(0,4)
@@ -83,14 +94,6 @@ def compShipPick():
             data["compBoard"][row][col] = SHIP
             i += 1
 
-def compPick():
-    row = randint(0,4)
-    col = randint(0,4)
-    if data["playerBoard"][row][col] == SHIP:
-        data["playerBoard"][row][col] = HIT
-    elif data["playerBoard"][row][col] == EMPTY:
-        data["playerBoard"][row][col] = MISS
-    
 
 
 def buildBoard():
