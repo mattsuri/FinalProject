@@ -79,14 +79,16 @@ def mouseClick(event):
                          
    
     else:
-        if data["compBoard"][compRow][compCol] == BLANK:
-            data["compBoard"][compRow][compCol] = MISS
+        if data["compBoard"][compRow][compCol] != MISS and data["compBoard"][compRow][compCol] != HIT:
+            compPick()
+            if data["compBoard"][compRow][compCol] == BLANK:
+                data["compBoard"][compRow][compCol] = MISS
+                
+            elif data["compBoard"][compRow][compCol] == SHIP:
+                data["compBoard"][compRow][compCol] = HIT
+                data["playerHits"] += 1
+                
             
-        elif data["compBoard"][compRow][compCol] == SHIP:
-            data["compBoard"][compRow][compCol] = HIT
-            data["playerHits"] += 1
-            
-        compPick()
     
     print(data["playerBoard"])
     
