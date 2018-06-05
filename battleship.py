@@ -51,20 +51,40 @@ def mouseClick(event):
     print("compRow:", compRow)
     
     if data["pickShips"] == True:
-        if data["numShips"] < 6:
+        if nowShips < data["numShips"]:
             if data["playerBoard"][row][col] != SHIP:
                     data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
                     Sprite(shipCircle, (col*DIAMETER, row*DIAMETER))
-                    data["numShips"] += 1
-                    if data["numShips"] == 5:
+                    nowShips += 1
+                    if nowShips = 5:
                          data["pickShips"] = False
+                         data["compPickShips"] = True
                          
    
-    
+    else:
+        if data["computerBoard"][compRow][compCol] == EMPTY:
+            data["computerBoard"][compRow][compCol] = MISS
+                computer = True #variable that tells the computer to guess where to shoot
+        elif data["computerBoard"][compRow][compCol] == SHIP:
+            data["computerBoard"][compRow][compCol] = HIT
+            data["playerHits"] += 1
+            computer = True
     
     print(data["playerBoard"])
     
     redraw()
+
+def compShipPick():
+    while i < 6:
+        row = randint(1,5)
+        col = randint(1,5)
+        if data["playerBoard"][row][col] != SHIP:
+            data["playerBoard"][row][col] = SHIP
+            i += 1
+
+def compPick:
+    
+
 
 def buildBoard():
     return [[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE]
@@ -89,7 +109,7 @@ def redraw():
             if data["compBoard"][row][column] == BLANK:
                 Sprite(blankCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
             elif data["compBoard"][row][column] == SHIP:
-                Sprite(shipCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
+                Sprite(blankCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
             elif data["comprBoard"][row][column] == MISS:
                 Sprite(missCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
             elif data["compBoard"][row][column] == HIT:
@@ -99,13 +119,16 @@ def redraw():
 if __name__ == "__main__":
     
     data = {}
-    data["numShips"] = 0 
+    data["numShips"] = 6
+    
     data["pickShips"] = True
+    data["playerHits"] = 0
     data["playerBoard"] = buildBoard()
     data["compBoard"] = buildBoard()
-    
+    data["compPickShips"] = False
     
     redraw()
+    compShipPick()
             
     
     App().listenMouseEvent("click", mouseClick)
