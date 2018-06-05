@@ -43,19 +43,25 @@ shipCircle = CircleAsset(RADIUS, blackOutline, green) #radius, outline, fill
 def mouseClick(event):
     col = int((event.x - BORDEREDGE)/DIAMETER)
     row = int((event.y - BORDEREDGE)/DIAMETER)
-    print(col)
-    print(row)
+    compCol = int((event.x - BOARDGAP)/DIAMETER)
+    compRow = int((event.y)/DIAMETER)
+    print("col:", col)
+    print("row:", row)
+    print("compCol:", compCol)
+    print("compRow:", compRow)
     
-    if data["numShips"] < 6:
-        if data["pickShips"] == True:
+    if data["pickShips"] == True:
+        if data["numShips"] < 6:
             if data["playerBoard"][row][col] != SHIP:
                     data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
                     Sprite(shipCircle, (col*DIAMETER, row*DIAMETER))
                     data["numShips"] += 1
                     if data["numShips"] == 5:
                          data["pickShips"] = False
-                        
-        
+                         
+   
+    
+    
     print(data["playerBoard"])
     
     redraw()
