@@ -95,7 +95,7 @@ def mouseClick(event):
 
 def compShipPick():
     i = 0
-    while i < 6:
+    while i < 5:
         row = randint(0,4)
         col = randint(0,4)
         if data["compBoard"][row][col] != SHIP:
@@ -127,8 +127,8 @@ def redraw():
             if data["compBoard"][row][column] == BLANK:
                 Sprite(blankCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
             elif data["compBoard"][row][column] == SHIP:
-                Sprite(blankCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
-            elif data["comprBoard"][row][column] == MISS:
+                Sprite(shipCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
+            elif data["compBoard"][row][column] == MISS:
                 Sprite(missCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
             elif data["compBoard"][row][column] == HIT:
                 Sprite(hitCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
