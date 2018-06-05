@@ -60,13 +60,14 @@ def mouseClick(event):
     print("compCol:", compCol)
     print("compRow:", compRow)
     
+    nowShips = 0
     if data["pickShips"] == True:
         if nowShips < data["numShips"]:
             if data["playerBoard"][row][col] != SHIP:
                     data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
                     Sprite(shipCircle, (col*DIAMETER, row*DIAMETER))
                     nowShips += 1
-                    if nowShips = 5:
+                    if nowShips == 5:
                          data["pickShips"] = False
                          data["compPickShips"] = True
                          
@@ -74,11 +75,11 @@ def mouseClick(event):
     else:
         if data["computerBoard"][compRow][compCol] == EMPTY:
             data["computerBoard"][compRow][compCol] = MISS
-                computer = True #variable that tells the computer to guess where to shoot
+            
         elif data["computerBoard"][compRow][compCol] == SHIP:
             data["computerBoard"][compRow][compCol] = HIT
             data["playerHits"] += 1
-            computer = True
+            
         compPick()
     
     print(data["playerBoard"])
@@ -87,6 +88,7 @@ def mouseClick(event):
 
 
 def compShipPick():
+    i = 0
     while i < 6:
         row = randint(0,4)
         col = randint(0,4)
