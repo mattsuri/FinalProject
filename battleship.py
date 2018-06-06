@@ -100,7 +100,7 @@ def mouseClick(event):
 
 
 def compShipPick():
-    while data["compShips"] < 6:
+    while data["compShips"] < 5:
         row = randint(0,4)
         col = randint(0,4)
         if data["compBoard"][row][col] != SHIP:
@@ -140,10 +140,10 @@ def redraw():
                 Sprite(hitCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
 
     
-    Sprite(TextAsset(data["playerHits"], fill = black, style = "Bold 24pt Times"), (160,RADIUS*11))
-    Sprite(TextAsset(data["compHits"], fill = black, style = "Bold 24pt Times"), (600,RADIUS*11))
-    Sprite(TextAsset("USER", fill = black, style = "Bold 24pt Times"),(160,RADIUS*10))
-    Sprite(TextAsset("COMPUTER", fill = black, style = "Bold 24pt Times"),(600,RADIUS*10))
+    Sprite(TextAsset(data["playerHits"], fill = black, style = "Bold 24pt Times"), (100,DIAMETER*5))
+    Sprite(TextAsset(data["compHits"], fill = black, style = "Bold 24pt Times"), (800,DIAMETER*5))
+    Sprite(TextAsset("USER:", fill = black, style = "Bold 24pt Times"),(DIAMETER*0,DIAMETER*5))
+    Sprite(TextAsset("COMPUTER:", fill = black, style = "Bold 24pt Times"),(DIAMETER*6,DIAMETER*5))
     
     if data["playerHits"] == 5: #checking to see how many times the player has hit a ship
         data["play"] = False #variable that makes the mouseClick function run
