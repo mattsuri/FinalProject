@@ -18,13 +18,14 @@ grey = Color(0x787878, 1)
 
 
 
-RADIUS = 50 #radius of circles
+RADIUS = 50 
 BORDEREDGE = 0 #border distance
 DIAMETER = RADIUS * 2
 BOARDSIZE = 5
-BOARDGAP = (DIAMETER*5) + DIAMETER
+BOARDGAP = (DIAMETER*5) + DIAMETER # Distance between left edges of the boards
 
-BLANK = 0 
+
+BLANK = 0 #Numerical assignments for the board matrices 
 SHIP = 1
 MISS = 2 
 HIT = 3
@@ -33,14 +34,15 @@ HIT = 3
 blackOutline = LineStyle(1, black)
     
 redCircle = CircleAsset(RADIUS, blackOutline, red)
+
     
 blankCircle = CircleAsset(RADIUS, blackOutline, white) #radius, outline, fill
 hitCircle = CircleAsset(RADIUS, blackOutline, red) #radius, outline, fill
 missCircle = CircleAsset(RADIUS, blackOutline, grey) #radius, outline, fill
 shipCircle = CircleAsset(RADIUS, blackOutline, green) #radius, outline, fill
+#All circle types for ships
 
-
-def compPick():
+def compPick(): #computer picking after each mouseclick function
     row = randint(0,4)
     col = randint(0,4)
     
@@ -61,14 +63,12 @@ def compPick():
   
 def mouseClick(event):
     if data["play"] == True:
-        col = int((event.x - BORDEREDGE)/DIAMETER)
+        col = int((event.x - BORDEREDGE)/DIAMETER) #finding row and col in terms of boards by divding by diameter 
         row = int((event.y - BORDEREDGE)/DIAMETER)
         compCol = int((event.x - BOARDGAP)/DIAMETER)
         compRow = int((event.y)/DIAMETER)
         
-        
-    
-        if data["pickShips"] == True:
+        if data["pickShips"] == True: #allow player to pick ships initial unitl max ship limit is reached
             if data["numShips"] < 6:
                 if data["playerBoard"][row][col] != SHIP:
                         data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
@@ -77,8 +77,7 @@ def mouseClick(event):
                              data["pickShips"] = False
                              
                              
-       
-        else:
+        else: #changing classifications/values in the compBoard matrix to respond to click locations
             if event.x > BOARDGAP:
                 if data["compBoard"][compRow][compCol] != MISS and data["compBoard"][compRow][compCol] != HIT:
                     compPick()
@@ -89,14 +88,11 @@ def mouseClick(event):
                         data["compBoard"][compRow][compCol] = HIT
                         data["playerHits"] += 1
                         
-                
-        
-        
         
         redraw()
 
 
-def compShipPick():
+def compShipPick(): #allows computer to pick ship in the beginning 
     while data["compShips"] < 5:
         row = randint(0,4)
         col = randint(0,4)
@@ -107,7 +103,7 @@ def compShipPick():
 
 
 
-def buildBoard():
+def buildBoard(): #makes a blank board based on the BOARDSIZE
     return [[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE,[BLANK]*BOARDSIZE]
 
 
@@ -115,7 +111,7 @@ def redraw():
     
     for item in App().spritelist[:]: #Destroying sprites
         item.destroy()
-    for row in range(0,BOARDSIZE): #the loop for board
+    for row in range(0,BOARDSIZE): #the loop for refreshing player board
         for column in range(0,BOARDSIZE):
             if data["playerBoard"][row][column] == BLANK:
                 Sprite(blankCircle, (column*DIAMETER, row*DIAMETER))
@@ -125,7 +121,7 @@ def redraw():
                 Sprite(missCircle, (column*DIAMETER, row*DIAMETER))
             elif data["playerBoard"][row][column] == HIT:
                 Sprite(hitCircle, (column*DIAMETER, row*DIAMETER))
-    for row in range(0,BOARDSIZE): #the loop for board
+    for row in range(0,BOARDSIZE): #the loop for refreshing computer board
         for column in range(0,BOARDSIZE):
             if data["compBoard"][row][column] == BLANK:
                 Sprite(blankCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
@@ -142,8 +138,8 @@ def redraw():
     Sprite(TextAsset("PLAYER:", fill = black, style = "Bold 24pt Times"),(DIAMETER*0,DIAMETER*5))
     Sprite(TextAsset("COMPUTER:", fill = black, style = "Bold 24pt Times"),(DIAMETER*6,DIAMETER*5))
     
-    if data["playerHits"] == 5: #checking to see how many times the player has hit a ship
-        data["play"] = False #variable that makes the mouseClick function run
+    if data["playerHits"] == 5: #check to see if anyone has hit all the hips
+        data["play"] = False #Stops mouse function from running after game ends
         Sprite(TextAsset("YOU WIN", fill = black, style = "Bold 60pt Times"),(325,150))
     elif data["compHits"] == 5:
         data["play"] = False
