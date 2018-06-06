@@ -60,42 +60,43 @@ def compPick():
   
   
 def mouseClick(event):
-    col = int((event.x - BORDEREDGE)/DIAMETER)
-    row = int((event.y - BORDEREDGE)/DIAMETER)
-    compCol = int((event.x - BOARDGAP)/DIAMETER)
-    compRow = int((event.y)/DIAMETER)
-    print("col:", col)
-    print("row:", row)
-    print("compCol:", compCol)
-    print("compRow:", compRow)
+    if data["play"] == True:
+        col = int((event.x - BORDEREDGE)/DIAMETER)
+        row = int((event.y - BORDEREDGE)/DIAMETER)
+        compCol = int((event.x - BOARDGAP)/DIAMETER)
+        compRow = int((event.y)/DIAMETER)
+        print("col:", col)
+        print("row:", row)
+        print("compCol:", compCol)
+        print("compRow:", compRow)
+        
     
-
-    if data["pickShips"] == True:
-        if data["numShips"] < 6:
-            if data["playerBoard"][row][col] != SHIP:
-                    data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
-                    data["numShips"] += 1
-                    if data["numShips"] == 5:
-                         data["pickShips"] = False
-                         
-                         
-   
-    else:
-        if event.x > BOARDGAP:
-            if data["compBoard"][compRow][compCol] != MISS and data["compBoard"][compRow][compCol] != HIT:
-                compPick()
-                if data["compBoard"][compRow][compCol] == BLANK:
-                    data["compBoard"][compRow][compCol] = MISS
-                    
-                elif data["compBoard"][compRow][compCol] == SHIP:
-                    data["compBoard"][compRow][compCol] = HIT
-                    data["playerHits"] += 1
-                    
-            
-    
-    print(data["playerBoard"])
-    
-    redraw()
+        if data["pickShips"] == True:
+            if data["numShips"] < 6:
+                if data["playerBoard"][row][col] != SHIP:
+                        data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
+                        data["numShips"] += 1
+                        if data["numShips"] == 5:
+                             data["pickShips"] = False
+                             
+                             
+       
+        else:
+            if event.x > BOARDGAP:
+                if data["compBoard"][compRow][compCol] != MISS and data["compBoard"][compRow][compCol] != HIT:
+                    compPick()
+                    if data["compBoard"][compRow][compCol] == BLANK:
+                        data["compBoard"][compRow][compCol] = MISS
+                        
+                    elif data["compBoard"][compRow][compCol] == SHIP:
+                        data["compBoard"][compRow][compCol] = HIT
+                        data["playerHits"] += 1
+                        
+                
+        
+        print(data["playerBoard"])
+        
+        redraw()
 
 
 def compShipPick():
@@ -140,22 +141,23 @@ def redraw():
 
     
     Sprite(TextAsset(data["playerHits"], fill = black, style = "Bold 24pt Times"), (160,RADIUS*11))
-    Sprite(TextAsset(data["computerHits"], fill = black, style = "Bold 24pt Times"), (600,RADIUS*11))
+    Sprite(TextAsset(data["compHits"], fill = black, style = "Bold 24pt Times"), (600,RADIUS*11))
     Sprite(TextAsset("USER", fill = black, style = "Bold 24pt Times"),(160,RADIUS*10))
     Sprite(TextAsset("COMPUTER", fill = black, style = "Bold 24pt Times"),(600,RADIUS*10))
     
-    if data["playerHits"] == SHIP: #checking to see how many times the player has hit a ship
-        data["continue"] = False #variable that makes the mouseClick function run
+    if data["playerHits"] == 5: #checking to see how many times the player has hit a ship
+        data["play"] = False #variable that makes the mouseClick function run
         Sprite(TextAsset("YOU WIN", fill = black, style = "Bold 60pt Times"),(325,150))
-    elif data["computerHits"] == SHIP:
-        data["continue"] = False
+    elif data["compHits"] == 5:
+        data["play"] = False
         Sprite(TextAsset("GAME OVER. YOU LOSE", fill = black, style = "Bold 60pt Times"),(325,150))
 
 if __name__ == "__main__":
     
     data = {}
+    data["play"] = True
     data["numShips"] = 0
-    data["compShips"] = 6
+    data["compShips"] = 0
     data["pickShips"] = True
     data["playerHits"] = 0
     data["compHits"] = 0 
