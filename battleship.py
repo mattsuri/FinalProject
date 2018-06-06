@@ -48,6 +48,7 @@ def compPick():
         
         if data["playerBoard"][row][col] == SHIP:
             data["playerBoard"][row][col] = HIT
+            data["compHits"] += 1
             
         elif data["playerBoard"][row][col] == BLANK:
             data["playerBoard"][row][col] = MISS
@@ -73,23 +74,23 @@ def mouseClick(event):
         if data["numShips"] < 6:
             if data["playerBoard"][row][col] != SHIP:
                     data["playerBoard"][row][col] = SHIP #assigning ship to spot in matrix
-                    
                     data["numShips"] += 1
                     if data["numShips"] == 5:
                          data["pickShips"] = False
-                         data["compPickShips"] = True
+                         
                          
    
     else:
-        if data["compBoard"][compRow][compCol] != MISS and data["compBoard"][compRow][compCol] != HIT:
-            compPick()
-            if data["compBoard"][compRow][compCol] == BLANK:
-                data["compBoard"][compRow][compCol] = MISS
-                
-            elif data["compBoard"][compRow][compCol] == SHIP:
-                data["compBoard"][compRow][compCol] = HIT
-                data["playerHits"] += 1
-                
+        if event.x > BOARDGAP:
+            if data["compBoard"][compRow][compCol] != MISS and data["compBoard"][compRow][compCol] != HIT:
+                compPick()
+                if data["compBoard"][compRow][compCol] == BLANK:
+                    data["compBoard"][compRow][compCol] = MISS
+                    
+                elif data["compBoard"][compRow][compCol] == SHIP:
+                    data["compBoard"][compRow][compCol] = HIT
+                    data["playerHits"] += 1
+                    
             
     
     print(data["playerBoard"])
@@ -98,13 +99,13 @@ def mouseClick(event):
 
 
 def compShipPick():
-    i = 0
-    while i < 5:
+    while data["compShips"] < 6:
         row = randint(0,4)
         col = randint(0,4)
         if data["compBoard"][row][col] != SHIP:
             data["compBoard"][row][col] = SHIP
-            i += 1
+            data["compShips"] += 1
+            
 
 
 
@@ -137,6 +138,18 @@ def redraw():
             elif data["compBoard"][row][column] == HIT:
                 Sprite(hitCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
 
+    
+    Sprite(TextAsset(data["playerHits"], fill = black, style = "Bold 24pt Times"), (160,RADIUS*11))
+    Sprite(TextAsset(data["computerHits"], fill = black, style = "Bold 24pt Times"), (600,RADIUS*11))
+    Sprite(TextAsset("USER", fill = black, style = "Bold 24pt Times"),(160,RADIUS*10))
+    Sprite(TextAsset("COMPUTER", fill = black, style = "Bold 24pt Times"),(600,RADIUS*10))
+    
+    if data["playerHits"] == SHIP: #checking to see how many times the player has hit a ship
+        data["continue"] = False #variable that makes the mouseClick function run
+        Sprite(TextAsset("YOU WIN", fill = black, style = "Bold 60pt Times"),(325,150))
+    elif data["computerHits"] == SHIP:
+        data["continue"] = False
+        Sprite(TextAsset("GAME OVER. YOU LOSE", fill = black, style = "Bold 60pt Times"),(325,150))
 
 if __name__ == "__main__":
     
@@ -145,10 +158,12 @@ if __name__ == "__main__":
     data["compShips"] = 6
     data["pickShips"] = True
     data["playerHits"] = 0
+    data["compHits"] = 0 
     data["playerBoard"] = buildBoard()
     data["compBoard"] = buildBoard()
     data["compPickShips"] = False
     
+   
     redraw()
     compShipPick()
             
