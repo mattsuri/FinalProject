@@ -65,10 +65,7 @@ def mouseClick(event):
         row = int((event.y - BORDEREDGE)/DIAMETER)
         compCol = int((event.x - BOARDGAP)/DIAMETER)
         compRow = int((event.y)/DIAMETER)
-        print("col:", col)
-        print("row:", row)
-        print("compCol:", compCol)
-        print("compRow:", compRow)
+        
         
     
         if data["pickShips"] == True:
@@ -94,7 +91,7 @@ def mouseClick(event):
                         
                 
         
-        print(data["playerBoard"])
+        
         
         redraw()
 
@@ -133,16 +130,16 @@ def redraw():
             if data["compBoard"][row][column] == BLANK:
                 Sprite(blankCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
             elif data["compBoard"][row][column] == SHIP:
-                Sprite(shipCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
+                Sprite(blankCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
             elif data["compBoard"][row][column] == MISS:
                 Sprite(missCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
             elif data["compBoard"][row][column] == HIT:
                 Sprite(hitCircle, (column*DIAMETER+BOARDGAP, row*DIAMETER))
 
     
-    Sprite(TextAsset(data["playerHits"], fill = black, style = "Bold 24pt Times"), (100,DIAMETER*5))
+    Sprite(TextAsset(data["playerHits"], fill = black, style = "Bold 24pt Times"), (145,DIAMETER*5))
     Sprite(TextAsset(data["compHits"], fill = black, style = "Bold 24pt Times"), (800,DIAMETER*5))
-    Sprite(TextAsset("USER:", fill = black, style = "Bold 24pt Times"),(DIAMETER*0,DIAMETER*5))
+    Sprite(TextAsset("PLAYER:", fill = black, style = "Bold 24pt Times"),(DIAMETER*0,DIAMETER*5))
     Sprite(TextAsset("COMPUTER:", fill = black, style = "Bold 24pt Times"),(DIAMETER*6,DIAMETER*5))
     
     if data["playerHits"] == 5: #checking to see how many times the player has hit a ship
@@ -150,7 +147,7 @@ def redraw():
         Sprite(TextAsset("YOU WIN", fill = black, style = "Bold 60pt Times"),(325,150))
     elif data["compHits"] == 5:
         data["play"] = False
-        Sprite(TextAsset("GAME OVER. YOU LOSE", fill = black, style = "Bold 60pt Times"),(325,150))
+        Sprite(TextAsset("YOU LOSE", fill = black, style = "Bold 60pt Times"),(325,150))
 
 if __name__ == "__main__":
     
@@ -169,6 +166,7 @@ if __name__ == "__main__":
     redraw()
     compShipPick()
             
+    print("Choose where to place 5 ships on the PLAYER board then proceed to guess the location of the enemy's ships on the COMPUTER board")
     
     App().listenMouseEvent("click", mouseClick)
 
